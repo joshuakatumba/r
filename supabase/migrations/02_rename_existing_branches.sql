@@ -9,9 +9,4 @@ UPDATE public.branches
 SET name = 'Branch B' 
 WHERE name = 'South Sudan';
 
--- Ensure "Admin Branch" exists
-INSERT INTO public.branches (name) 
-VALUES ('Admin Branch') 
-ON CONFLICT (name) DO NOTHING;
-
 COMMIT;

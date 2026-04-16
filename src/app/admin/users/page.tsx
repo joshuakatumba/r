@@ -55,7 +55,7 @@ export default async function AdminUsersPage() {
                   </td>
                   <td>
                     {(user.branches as { name: string }[] | null)?.[0]?.name || (
-                      <span style={{ color: 'var(--text-secondary)', fontSize: '0.8rem' }}>Global (All Branches)</span>
+                      <span style={{ color: 'var(--text-secondary)', fontSize: '0.8rem' }}>Unassigned</span>
                     )}
                   </td>
                   <td>{new Date(user.created_at).toLocaleDateString()}</td>
@@ -63,18 +63,17 @@ export default async function AdminUsersPage() {
                     <div className="flex items-center gap-3">
                       <form className="flex items-center gap-2" action={async (formData) => {
                         'use server';
-                        const role = formData.get('role') as 'admin' | 'branch_user' | 'pending';
+                        const role = formData.get('role') as 'branch_user' | 'pending';
                         const branchId = formData.get('branch_id') as string;
-                        await updateUser(user.id, role, role === 'admin' ? null : branchId);
+                        await updateUser(user.id, role, branchId);
                       }}>
                         <select name="role" defaultValue={user.role} className="form-select" style={{ width: 'auto', minWidth: '130px' }} required>
                           <option value="pending">Pending Approval</option>
                           <option value="branch_user">Employee</option>
-                          <option value="admin">Administrator</option>
                         </select>
                         
                         <select name="branch_id" defaultValue={user.branch_id || ''} className="form-select" style={{ width: 'auto', minWidth: '160px' }}>
-                          <option value="">Global/Admin</option>
+                          <option value="">Unassigned</option>
                           {branches?.map(b => (
                             <option key={b.id} value={b.id}>{b.name}</option>
                           ))}

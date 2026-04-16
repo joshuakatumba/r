@@ -10,7 +10,7 @@ CREATE TABLE public.branches (
 );
 
 -- Insert default branches
-INSERT INTO public.branches (name) VALUES ('Branch A'), ('Branch B'), ('Admin Branch');
+INSERT INTO public.branches (name) VALUES ('Branch A'), ('Branch B');
 
 CREATE TABLE public.users (
     id UUID REFERENCES auth.users(id) ON DELETE CASCADE PRIMARY KEY,
