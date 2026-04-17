@@ -13,15 +13,12 @@ export default function SignupPage() {
     setLoading(true)
     setErrorMsg('')
     const formData = new FormData(e.currentTarget)
-    try {
-      const res = await signup(formData)
-      if (res?.error) {
-        setErrorMsg(res.error)
-      }
-    } catch {
-      // redirect throws an error in next.js
+    
+    const res = await signup(formData)
+    if (res?.error) {
+      setErrorMsg(res.error)
+      setLoading(false)
     }
-    setLoading(false)
   }
 
   return (

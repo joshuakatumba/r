@@ -61,7 +61,9 @@ export async function signup(formData: FormData) {
   const password = formData.get('password') as string
   const fullName = `${firstName} ${lastName}`.trim()
 
-  const { error } = await supabase.auth.signUp({
+  console.log('Attempting signup for:', email)
+
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
@@ -75,8 +77,11 @@ export async function signup(formData: FormData) {
   })
 
   if (error) {
+    console.error('Signup error:', error)
     return { error: error.message }
   }
+
+  console.log('Signup successful for user:', data.user?.id)
 
   revalidatePath('/', 'layout')
   redirect('/')
