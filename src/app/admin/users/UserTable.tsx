@@ -163,12 +163,13 @@ export default function UserTable({ initialUsers, branches }: UserTableProps) {
           z-index: 1000;
         }
         .modal-content {
-          background: var(--bg-card);
-          border: 1px solid var(--border-color);
-          border-radius: 12px;
+          background: var(--blue-900);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 20px;
           width: 100%;
           max-width: 450px;
-          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+          color: white;
         }
         .modal-header {
           padding: 1.5rem;
@@ -180,7 +181,7 @@ export default function UserTable({ initialUsers, branches }: UserTableProps) {
         .modal-header h2 {
           margin: 0;
           font-size: 1.25rem;
-          color: var(--text-primary);
+          color: #ffffff;
         }
         .close-btn {
           background: none;
@@ -202,20 +203,6 @@ export default function UserTable({ initialUsers, branches }: UserTableProps) {
           flex-direction: column;
           gap: 1.25rem;
         }
-        .profile-detail label {
-          display: block;
-          font-size: 0.75rem;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-          color: var(--text-secondary);
-          margin-bottom: 4px;
-          font-weight: 600;
-        }
-        .profile-detail .value {
-          font-size: 1rem;
-          color: var(--text-primary);
-          font-weight: 500;
-        }
         .profile-detail .value.mono {
           font-family: monospace;
           font-size: 0.85rem;
@@ -224,7 +211,7 @@ export default function UserTable({ initialUsers, branches }: UserTableProps) {
         .btn-link {
           background: none;
           border: none;
-          color: #ffffff;
+          color: #1e293b;
           font-weight: 700;
           font-size: 1.05rem;
           cursor: pointer;
@@ -234,7 +221,7 @@ export default function UserTable({ initialUsers, branches }: UserTableProps) {
           text-decoration: none;
         }
         .btn-link:hover {
-          color: #3b82f6;
+          color: var(--blue-700);
           text-decoration: none;
         }
       `}</style>

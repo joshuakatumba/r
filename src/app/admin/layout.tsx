@@ -1,9 +1,7 @@
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 import { signout } from '@/app/actions/auth'
-import { LayoutDashboard, Users, Banknote, ScrollText, LogOut } from 'lucide-react'
-import NavLink from '@/utils/NavLink'
-import NotificationBell from '@/components/NotificationBell'
+import LayoutNavigation from '@/components/LayoutNavigation'
 
 export default async function AdminLayout({
   children,
@@ -28,45 +26,20 @@ export default async function AdminLayout({
     redirect('/')
   }
 
+  const navLinks = [
+    { href: '/admin/dashboard', label: 'Dashboard', iconName: 'LayoutDashboard' },
+    { href: '/admin/users', label: 'Users', iconName: 'Users' },
+    { href: '/admin/transactions', label: 'Transactions', iconName: 'Banknote' },
+    { href: '/admin/logs', label: 'Logs', iconName: 'ScrollText' },
+  ]
+
   return (
     <div className="layout-wrapper">
-      <aside className="sidebar">
-        <div className="sidebar-header">
-          <div className="sidebar-brand">
-            <div style={{ width: '32px', height: '32px', background: 'var(--accent-primary)', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', color: 'white' }}>A</div>
-            Admin
-          </div>
-        </div>
-
-        <nav className="sidebar-nav">
-          <NavLink href="/admin/dashboard">
-            <LayoutDashboard size={18} /> Dashboard
-          </NavLink>
-          <NavLink href="/admin/users">
-            <Users size={18} /> Users
-          </NavLink>
-          <NavLink href="/admin/transactions">
-            <Banknote size={18} /> Transactions
-          </NavLink>
-          <NavLink href="/admin/logs">
-            <ScrollText size={18} /> Logs
-          </NavLink>
-        </nav>
-
-        <div className="sidebar-footer">
-          <div className="flex items-center justify-between mb-2">
-            <div className="portal-badge">
-              <span></span> Admin Portal
-            </div>
-            <NotificationBell />
-          </div>
-          <form action={signout}>
-            <button type="submit" className="btn btn-secondary btn-block" style={{ fontSize: '0.85rem', display: 'flex', gap: '8px' }}>
-              <LogOut size={16} /> Sign Out
-            </button>
-          </form>
-        </div>
-      </aside>
+      <LayoutNavigation 
+        branchName="Admin Portal" 
+        links={navLinks} 
+        signoutAction={signout} 
+      />
 
       <main className="main-content flex-1 animate-fade-in">
         <div className="container">

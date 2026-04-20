@@ -184,12 +184,13 @@ export default function NotificationBell() {
           bottom: calc(100% + 12px);
           left: 0;
           width: 320px;
-          background: var(--bg-secondary);
-          border: 1px solid var(--glass-border);
+          background: var(--blue-900);
+          border: 1px solid rgba(255, 255, 255, 0.1);
           border-radius: 12px;
-          box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
           overflow: hidden;
-          z-index: 100;
+          z-index: 1000;
+          color: white;
         }
         .dropdown-header {
           padding: 1rem;
@@ -202,7 +203,8 @@ export default function NotificationBell() {
         .dropdown-header h3 {
           margin: 0;
           font-size: 0.95rem;
-          font-weight: 600;
+          font-weight: 700;
+          color: white;
         }
         .mark-all-btn {
           background: none;
@@ -229,10 +231,10 @@ export default function NotificationBell() {
           background: rgba(255, 255, 255, 0.03);
         }
         .notification-item.unread {
-          background: rgba(59, 130, 246, 0.05);
+          background: rgba(255, 255, 255, 0.03);
         }
         .notification-item.unread .type-dot {
-          background: var(--accent-primary);
+          background: var(--blue-400);
         }
         .item-header {
           display: flex;
@@ -250,21 +252,6 @@ export default function NotificationBell() {
           font-size: 0.7rem;
           color: var(--text-secondary);
           opacity: 0.7;
-        }
-        .title {
-          font-size: 0.85rem;
-          font-weight: 600;
-          color: var(--text-primary);
-          margin-bottom: 2px;
-        }
-        .message {
-          font-size: 0.8rem;
-          color: var(--text-secondary);
-          line-height: 1.4;
-        }
-        .empty-state p {
-          margin: 0;
-          font-size: 0.85rem;
         }
 
         /* Premium Stacked Toast Styles */

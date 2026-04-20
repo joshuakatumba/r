@@ -80,7 +80,17 @@ export default function BranchCreateTxPage() {
               </div>
               
               <div className="mt-8 flex gap-4" style={{ justifyContent: 'center' }}>
-                <button type="button" onClick={() => window.print()} className="btn btn-primary" style={{ gap: '8px' }}>
+                <button 
+                  type="button" 
+                  onClick={() => {
+                    const originalTitle = document.title;
+                    document.title = `Receipt - ${result.rawData?.senderName || 'Transfer'}`;
+                    window.print();
+                    document.title = originalTitle;
+                  }} 
+                  className="btn btn-primary" 
+                  style={{ gap: '8px' }}
+                >
                   <Printer size={18} /> Print Receipt
                 </button>
                 <button type="button" onClick={() => setResult(null)} className="btn btn-secondary">
@@ -212,6 +222,14 @@ export default function BranchCreateTxPage() {
             <div style={{ marginTop: '1.5rem', textAlign: 'center', fontSize: '0.7rem' }}>
               <p>Keep this code safe.</p>
               <p>Thank you for using Lennox.</p>
+            </div>
+
+            <div style={{ marginTop: '1.5rem', display: 'flex', justifyContent: 'center' }}>
+              <img 
+                src={`https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${result.code}`} 
+                alt="QR Code" 
+                style={{ border: '1px solid #eee', padding: '4px', width: '120px', height: '120px' }}
+              />
             </div>
           </div>
         </div>

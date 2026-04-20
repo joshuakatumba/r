@@ -1,9 +1,7 @@
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 import { signout } from '@/app/actions/auth'
-import { LayoutDashboard, SendHorizontal, Download, History, LogOut } from 'lucide-react'
-import NavLink from '@/utils/NavLink'
-import NotificationBell from '@/components/NotificationBell'
+import LayoutNavigation from '@/components/LayoutNavigation'
 
 export default async function BranchLayout({
   children,
@@ -20,7 +18,7 @@ export default async function BranchLayout({
 
   const { data: profile } = await supabase
     .from('users')
-    .select('role')
+    .select('role, branch_id, branches(name)')
     .eq('id', user.id)
     .single()
 
@@ -28,47 +26,22 @@ export default async function BranchLayout({
     redirect('/')
   }
 
-  const branchDisplayName = "Sudan Branch"
+  const branchName = (profile.branches as any)?.name || "Sudan Branch"
+
+  const navLinks = [
+    { href: '/sudan/dashboard', label: 'Dashboard', iconName: 'LayoutDashboard' },
+    { href: '/sudan/create', label: 'Send Money', iconName: 'SendHorizontal' },
+    { href: '/sudan/claim', label: 'Receive Money', iconName: 'Download' },
+    { href: '/sudan/history', label: 'History', iconName: 'History' },
+  ]
 
   return (
     <div className="layout-wrapper">
-      <aside className="sidebar">
-        <div className="sidebar-header">
-          <div className="sidebar-brand">
-            <div style={{ width: '32px', height: '32px', background: 'var(--accent-primary)', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', color: 'white' }}>B</div>
-            {branchDisplayName}
-          </div>
-        </div>
-
-        <nav className="sidebar-nav">
-          <NavLink href="/sudan/dashboard">
-            <LayoutDashboard size={18} /> Dashboard
-          </NavLink>
-          <NavLink href="/sudan/create">
-            <SendHorizontal size={18} /> Send Money
-          </NavLink>
-          <NavLink href="/sudan/claim">
-            <Download size={18} /> Receive Money
-          </NavLink>
-          <NavLink href="/sudan/history">
-            <History size={18} /> History
-          </NavLink>
-        </nav>
-
-        <div className="sidebar-footer">
-          <div className="flex items-center justify-between mb-2">
-            <div className="portal-badge">
-              <span></span> Branch Portal
-            </div>
-            <NotificationBell />
-          </div>
-          <form action={signout}>
-            <button type="submit" className="btn btn-secondary btn-block" style={{ fontSize: '0.85rem', display: 'flex', gap: '8px' }}>
-              <LogOut size={16} /> Sign Out
-            </button>
-          </form>
-        </div>
-      </aside>
+      <LayoutNavigation 
+        branchName={branchName} 
+        links={navLinks} 
+        signoutAction={signout} 
+      />
 
       <main className="main-content flex-1 animate-fade-in">
         <div className="container">
