@@ -65,15 +65,18 @@ export default function UserTable({ initialUsers, branches }: UserTableProps) {
                       <form className="flex items-center gap-2" action={async (formData) => {
                         const role = formData.get('role') as any;
                         const branchId = formData.get('branch_id') as string;
-                        await updateUser(user.id, role, branchId);
+                        const result = await updateUser(user.id, role, branchId);
+                        if (result?.error) {
+                          alert(result.error);
+                        }
                       }}>
-                        <select name="role" defaultValue={user.role} className="form-select" style={{ width: 'auto', minWidth: '140px' }} required>
+                        <select key={user.role} name="role" defaultValue={user.role} className="form-select" style={{ width: 'auto', minWidth: '140px' }} required>
                           <option value="pending">Pending Approval</option>
                           <option value="branch_user">Branch User</option>
                           <option value="admin">System Admin</option>
                         </select>
                         
-                        <select name="branch_id" defaultValue={user.branch_id || ''} className="form-select" style={{ width: 'auto', minWidth: '160px' }}>
+                        <select key={user.branch_id || 'unassigned'} name="branch_id" defaultValue={user.branch_id || ''} className="form-select" style={{ width: 'auto', minWidth: '160px' }}>
                           <option value="">Unassigned</option>
                           {branches?.map(b => (
                             <option key={b.id} value={b.id}>{b.name}</option>

@@ -48,15 +48,13 @@ export async function updateUser(userId: string, targetRole: 'admin' | 'branch_u
     return { error: 'Unauthorized. Admin only.' }
   }
 
-  // 2. Update user
-  // Allow branch assignment regardless of role if specified
-  const { error: updateError } = await supabase
-    .from('users')
-    .update({
-      role: targetRole,
-      branch_id: branchId || null
-    })
-    .eq('id', userId)
+  // 2. Update user using RPC function
+  // This bypasses any RLS issues or cascading triggers blocking the update
+  const { error: updateError } = await supabase.rpc('admin_update_user', {
+    target_user_id: userId,
+    new_role: targetRole,
+    new_branch_id: branchId || null
+  })
 
   if (updateError) {
     return { error: updateError.message }
@@ -90,9 +88,9 @@ export async function deleteUser(userId: string) {
     return { error: 'Unauthorized. Admin only.' }
   }
 
-  // 2. Delete user profile using RPC function
-  // This bypasses RLS issues with cascading updates in PostgreSQL
-  const { error: deleteError } = await supabase.rpc('admin_delete_user', {
+  // 2. Delete user using high-privilege RPC function
+  // This completely removes the user from auth.users and cascades to public.users
+  const { error: deleteError } = await supabase.rpc('admin_delete_user_full', {
     target_user_id: userId
   })
 
