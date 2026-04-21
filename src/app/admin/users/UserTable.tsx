@@ -86,7 +86,10 @@ export default function UserTable({ initialUsers, branches }: UserTableProps) {
 
                       <form action={async () => {
                         if (confirm('Are you sure you want to delete this user?')) {
-                          await deleteUser(user.id);
+                          const result = await deleteUser(user.id);
+                          if (result?.error) {
+                            alert(result.error);
+                          }
                         }
                       }}>
                         <button type="submit" className="btn btn-danger" style={{ padding: '0.65rem 1rem' }}>

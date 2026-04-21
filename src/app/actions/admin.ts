@@ -91,13 +91,16 @@ export async function deleteUser(userId: string) {
   }
 
   // 2. Delete user profile
+  // Note: This will delete the public profile. 
+  // To delete the auth user, we would need the service role key.
   const { error: deleteError } = await supabase
     .from('users')
     .delete()
     .eq('id', userId)
 
   if (deleteError) {
-    return { error: deleteError.message }
+    console.error('Delete User Error:', deleteError)
+    return { error: `Failed to delete user profile: ${deleteError.message}` }
   }
 
   // 3. Log Action
