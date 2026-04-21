@@ -90,17 +90,15 @@ export async function deleteUser(userId: string) {
     return { error: 'Unauthorized. Admin only.' }
   }
 
-  // 2. Delete user profile
-  // Note: This will delete the public profile. 
-  // To delete the auth user, we would need the service role key.
-  const { error: deleteError } = await supabase
-    .from('users')
-    .delete()
-    .eq('id', userId)
+  // 2. Delete user profile using RPC function
+  // This bypasses RLS issues with cascading updates in PostgreSQL
+  const { error: deleteError } = await supabase.rpc('admin_delete_user', {
+    target_user_id: userId
+  })
 
   if (deleteError) {
     console.error('Delete User Error:', deleteError)
-    return { error: `Failed to delete user profile: ${deleteError.message}` }
+    return { error: `Failed to delete user: ${deleteError.message}` }
   }
 
   // 3. Log Action
