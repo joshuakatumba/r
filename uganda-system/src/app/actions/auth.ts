@@ -84,7 +84,7 @@ export async function signup(formData: FormData) {
   console.log('Signup successful for user:', data.user?.id)
 
   revalidatePath('/', 'layout')
-  redirect('/')
+  redirect('/login')
 }
 
 export async function signout() {

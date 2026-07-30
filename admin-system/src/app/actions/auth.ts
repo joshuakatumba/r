@@ -34,6 +34,7 @@ export async function login(formData: FormData) {
     .single()
 
   if (profileError || !profile) {
+    console.error("Profile load error:", profileError, "Profile data:", profile);
     return { error: 'Unable to load profile. Please contact admin.' }
   }
 

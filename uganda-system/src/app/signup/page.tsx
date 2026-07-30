@@ -24,7 +24,7 @@ export default function SignupPage() {
   return (
     <div className="center-page">
       <div className="card animate-fade-in" style={{ width: '100%', maxWidth: '400px' }}>
-        <h1 className="text-center">Create Account</h1>
+        <h1 className="text-center">Uganda Branch</h1>
         <p className="text-center mb-4">Sign up and wait for admin approval</p>
 
         {errorMsg && (

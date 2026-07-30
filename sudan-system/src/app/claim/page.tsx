@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { previewClaim, claimTransaction } from '@/app/actions/transactions'
 import Link from 'next/link'
 import { CheckCircle, Printer, RotateCcw, FileText } from 'lucide-react'
+import { toast } from 'react-hot-toast'
 
 interface TransactionData {
   id: string;
@@ -31,8 +32,10 @@ export default function BranchClaimTxPage() {
     const res = await previewClaim(code.trim())
     if (res.error) {
       setErrorMsg(res.error)
+      toast.error(res.error)
     } else if (res.data) {
       setPreview(res.data)
+      toast.success('Transaction Found!')
       form.reset()
     }
     setLoading(false)
@@ -45,8 +48,10 @@ export default function BranchClaimTxPage() {
     const res = await claimTransaction(preview.id)
     if (res.error) {
       setErrorMsg(res.error)
+      toast.error(res.error)
     } else if (res.data) {
       setSuccessData(res.data)
+      toast.success('Claim Successfully Processed!')
       setPreview(null) // Clear preview state
     }
     setLoading(false)

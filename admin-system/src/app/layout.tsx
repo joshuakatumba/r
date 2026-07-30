@@ -2,6 +2,7 @@ import './globals.css'
 import { createClient } from '@/utils/supabase/server'
 import { signout } from '@/app/actions/auth'
 import LayoutNavigation from '@/components/LayoutNavigation'
+import { Toaster } from 'react-hot-toast'
 
 export const metadata = {
   title: 'Lennox Admin Portal',
@@ -40,6 +41,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className="theme-admin">
+        <Toaster position="top-right" containerStyle={{ zIndex: 999999 }} />
         {isAdmin ? (
           <div className="layout-wrapper">
             <LayoutNavigation 

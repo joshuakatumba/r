@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { createTransaction } from '@/app/actions/transactions'
 import Link from 'next/link'
 import { Printer, Send, History, CheckCircle, ArrowLeft } from 'lucide-react'
+import { toast } from 'react-hot-toast'
 
 interface TransactionPayload {
   amount: number
@@ -20,22 +21,24 @@ export default function BranchCreateTxPage() {
     e.preventDefault()
     setLoading(true)
     setResult(null)
-    
+
     const form = e.currentTarget
     const formData = new FormData(form)
-    
+
     const payload = {
       amount: Number(formData.get('amount')),
       senderName: formData.get('senderName') as string,
       senderContact: formData.get('senderContact') as string,
       senderAddress: formData.get('senderAddress') as string,
     }
-    
+
     const res = await createTransaction(payload)
     if (res.error) {
       setResult({ error: res.error })
+      toast.error(res.error)
     } else if (res.data) {
       setResult({ code: res.data.code, rawData: payload })
+      toast.success('Transfer Initiated Successfully!')
       form.reset()
     }
     setLoading(false)
@@ -53,7 +56,7 @@ export default function BranchCreateTxPage() {
           </Link>
           <h1 style={{ margin: 0 }}>Initiate Transfer</h1>
         </div>
-        
+
         <div className="card" style={{ padding: 0 }}>
           {result?.code ? (
             <div style={{ padding: '4rem', textAlign: 'center' }} className="animate-fade-in">
@@ -62,33 +65,33 @@ export default function BranchCreateTxPage() {
               </div>
               <h2 className="text-success mb-2">Transfer Initiated Successfully</h2>
               <p className="mb-6 text-secondary">Provide the secure code below to the recipient.</p>
-              
-              <div style={{ 
-                fontSize: '2.5rem', 
-                fontWeight: 800, 
-                letterSpacing: '4px', 
-                fontFamily: 'monospace', 
-                padding: '1.5rem', 
-                background: 'rgba(0,0,0,0.4)', 
+
+              <div style={{
+                fontSize: '2.5rem',
+                fontWeight: 800,
+                letterSpacing: '4px',
+                fontFamily: 'monospace',
+                padding: '1.5rem',
+                background: 'rgba(0,0,0,0.4)',
                 border: '2px dashed var(--accent-success)',
-                borderRadius: '12px', 
+                borderRadius: '12px',
                 margin: '2rem 0',
                 color: 'white',
                 textShadow: '0 0 10px rgba(16, 185, 129, 0.3)'
               }}>
                 {result.code}
               </div>
-              
+
               <div className="mt-8 flex gap-4" style={{ justifyContent: 'center' }}>
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   onClick={() => {
                     const originalTitle = document.title;
                     document.title = `Receipt - ${result.rawData?.senderName || 'Transfer'}`;
                     window.print();
                     document.title = originalTitle;
-                  }} 
-                  className="btn btn-primary" 
+                  }}
+                  className="btn btn-primary"
                   style={{ gap: '8px' }}
                 >
                   <Printer size={18} /> Print Receipt
@@ -133,16 +136,16 @@ export default function BranchCreateTxPage() {
                     <label className="form-label" htmlFor="amount">Transfer Amount (USD)</label>
                     <div style={{ position: 'relative' }}>
                       <span style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', fontWeight: 600, color: 'var(--text-secondary)' }}>$</span>
-                      <input 
-                        className="form-input" 
-                        id="amount" 
-                        name="amount" 
-                        type="number" 
-                        min="1" 
-                        step="0.01" 
-                        style={{ paddingLeft: '2rem', fontSize: '1.5rem', fontWeight: 700, color: 'var(--accent-primary)' }} 
+                      <input
+                        className="form-input"
+                        id="amount"
+                        name="amount"
+                        type="number"
+                        min="1"
+                        step="0.01"
+                        style={{ paddingLeft: '2rem', fontSize: '1.5rem', fontWeight: 700, color: 'var(--accent-primary)' }}
                         placeholder="0.00"
-                        required 
+                        required
                       />
                     </div>
                   </div>
@@ -218,16 +221,16 @@ export default function BranchCreateTxPage() {
             <div style={{ marginTop: '3rem', fontSize: '0.75rem', textAlign: 'center' }}>
               <p style={{ borderTop: '1px solid black', paddingTop: '0.5rem' }}>Customer Signature</p>
             </div>
-            
+
             <div style={{ marginTop: '1.5rem', textAlign: 'center', fontSize: '0.7rem' }}>
               <p>Keep this code safe.</p>
               <p>Thank you for using Lennox.</p>
             </div>
 
             <div style={{ marginTop: '1.5rem', display: 'flex', justifyContent: 'center' }}>
-              <img 
-                src={`https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${result.code}`} 
-                alt="QR Code" 
+              <img
+                src={`https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${result.code}`}
+                alt="QR Code"
                 style={{ border: '1px solid #eee', padding: '4px', width: '120px', height: '120px' }}
               />
             </div>

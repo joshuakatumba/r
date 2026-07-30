@@ -370,6 +370,14 @@ export default function NotificationBell() {
         .animate-slide-in {
           animation: slideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
+
+        @media (max-width: 768px) {
+          .notification-dropdown {
+            width: 250px;
+            left: auto;
+            right: -10px;
+          }
+        }
       `}</style>
     </div>
   )

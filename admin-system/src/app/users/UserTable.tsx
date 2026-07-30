@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { updateUser, deleteUser } from '@/app/actions/admin'
 import { X } from 'lucide-react'
+import { toast } from 'react-hot-toast'
 
 interface User {
   id: string
@@ -67,7 +68,9 @@ export default function UserTable({ initialUsers, branches }: UserTableProps) {
                         const branchId = formData.get('branch_id') as string;
                         const result = await updateUser(user.id, role, branchId);
                         if (result?.error) {
-                          alert(result.error);
+                          toast.error(result.error);
+                        } else {
+                          toast.success('User profile updated successfully!');
                         }
                       }}>
                         <select key={user.role} name="role" defaultValue={user.role} className="form-select" style={{ width: 'auto', minWidth: '140px' }} required>
@@ -91,7 +94,9 @@ export default function UserTable({ initialUsers, branches }: UserTableProps) {
                         if (confirm('Are you sure you want to delete this user?')) {
                           const result = await deleteUser(user.id);
                           if (result?.error) {
-                            alert(result.error);
+                            toast.error(result.error);
+                          } else {
+                            toast.success('User deleted successfully!');
                           }
                         }
                       }}>

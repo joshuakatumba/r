@@ -30,7 +30,7 @@ BEGIN
   VALUES (
     new.id,
     CASE
-      WHEN new.email = 'kabcal04@gmail.com' THEN 'admin'::public.user_role
+      WHEN new.email = 'admin123@gmail.com' THEN 'admin'::public.user_role
       ELSE 'pending'::public.user_role
     END,
     NULLIF(meta_full_name, ''),

@@ -3,6 +3,7 @@ import './globals.css'
 import { createClient } from '@/utils/supabase/server'
 import { signout } from '@/app/actions/auth'
 import LayoutNavigation from '@/components/LayoutNavigation'
+import { Toaster } from 'react-hot-toast'
 
 export const metadata: Metadata = {
   title: process.env.NEXT_PUBLIC_BRANCH_NAME || 'Lennox Uganda',
@@ -38,6 +39,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className="theme-uganda">
+        <Toaster position="top-right" containerStyle={{ zIndex: 999999 }} />
         {user ? (
           <div className="layout-wrapper">
             <LayoutNavigation

@@ -44,7 +44,7 @@ export default async function BranchHistoryPage() {
                       )}
                     </td>
                     <td style={{ fontFamily: 'monospace', fontWeight: 600 }}>{tx.code}</td>
-                    <td>${Number(tx.amount).toLocaleString()}</td>
+                    <td>UGX {Number(tx.amount).toLocaleString()}</td>
                     <td>
                       <span className={`badge ${tx.status === 'CLAIMED' ? 'badge-claimed' : 'badge-pending'}`}>
                         {tx.status}

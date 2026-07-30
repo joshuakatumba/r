@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { previewClaim, claimTransaction } from '@/app/actions/transactions'
 import Link from 'next/link'
 import { CheckCircle, Printer, RotateCcw, FileText } from 'lucide-react'
+import { toast } from 'react-hot-toast'
 
 interface TransactionData {
   id: string;
@@ -31,8 +32,10 @@ export default function BranchClaimTxPage() {
     const res = await previewClaim(code.trim())
     if (res.error) {
       setErrorMsg(res.error)
+      toast.error(res.error)
     } else if (res.data) {
       setPreview(res.data)
+      toast.success('Transaction Found!')
       form.reset()
     }
     setLoading(false)
@@ -45,8 +48,10 @@ export default function BranchClaimTxPage() {
     const res = await claimTransaction(preview.id)
     if (res.error) {
       setErrorMsg(res.error)
+      toast.error(res.error)
     } else if (res.data) {
       setSuccessData(res.data)
+      toast.success('Claim Successfully Processed!')
       setPreview(null) // Clear preview state
     }
     setLoading(false)
@@ -91,7 +96,7 @@ export default function BranchClaimTxPage() {
           <div className="animate-fade-in">
             <h3 className="mb-3 text-center" style={{ color: 'var(--accent-pending)' }}>Transaction Found</h3>
             <div style={{ background: 'rgba(255,255,255,0.05)', padding: '1.5rem', borderRadius: '8px', marginBottom: '1.5rem' }}>
-              <p className="mb-2"><strong>Transfer Amount:</strong> <span style={{ fontSize: '1.5rem', fontWeight: 600, color: 'var(--text-primary)' }}>${Number(preview.amount).toLocaleString()}</span></p>
+              <p className="mb-2"><strong>Transfer Amount:</strong> <span style={{ fontSize: '1.5rem', fontWeight: 600, color: 'var(--text-primary)' }}>UGX {Number(preview.amount).toLocaleString()}</span></p>
               
               <div style={{ borderTop: '1px solid var(--glass-border)', margin: '1rem 0' }}></div>
               <p className="mb-2 text-secondary"><strong>Sender Information:</strong></p>
@@ -125,7 +130,7 @@ export default function BranchClaimTxPage() {
             <div className="receipt-body">
               <div className="receipt-row">
                 <span className="text-secondary">Amount Released</span>
-                <span className="receipt-amount">${Number(successData.amount).toLocaleString()}</span>
+                <span className="receipt-amount">UGX {Number(successData.amount).toLocaleString()}</span>
               </div>
               <div className="receipt-divider"></div>
               <div className="receipt-row">

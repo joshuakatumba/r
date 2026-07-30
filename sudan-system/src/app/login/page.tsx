@@ -32,7 +32,7 @@ export default function LoginPage() {
           <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>v2.4.0</div>
         </div>
         
-        <h1 className="text-center" style={{ fontSize: '1.75rem', marginBottom: '0.25rem' }}>Branch Access</h1>
+        <h1 className="text-center" style={{ fontSize: '1.75rem', marginBottom: '0.25rem' }}>Sudan Branch</h1>
         <p className="text-center mb-4">Login for regular branch users</p>
         
         {errorMsg && (

@@ -35,7 +35,7 @@ export default function AdminLoginPage() {
           <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>v2.4.0</div>
         </div>
 
-        <h1 className="text-center" style={{ fontSize: '1.75rem', marginBottom: '0.25rem' }}>Admin Login</h1>
+        <h1 className="text-center" style={{ fontSize: '1.75rem', marginBottom: '0.25rem' }}>Admin Branch</h1>
         <p className="text-center mb-4">Authorized administrators only</p>
 
         {errorMsg && (
@@ -44,7 +44,7 @@ export default function AdminLoginPage() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} autoComplete="off">
           <input type="hidden" name="portal" value="admin" />
           <div className="form-group">
             <label className="form-label" htmlFor="email">Email Address</label>
@@ -54,6 +54,8 @@ export default function AdminLoginPage() {
               name="email"
               type="email"
               placeholder="admin@example.com"
+              autoComplete="new-password"
+              data-form-type="other"
               required
             />
           </div>
@@ -66,6 +68,8 @@ export default function AdminLoginPage() {
               name="password"
               type="password"
               placeholder="••••••••"
+              autoComplete="new-password"
+              data-form-type="other"
               required
             />
           </div>
