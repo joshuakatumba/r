@@ -54,3 +54,9 @@ Email: sudanstaff@gmail.com
 Password: 12345678
 
 If an account is pending approval a message will appear after login. Access is only granted once a manager approves the account from the Admin Center.
+
+.env details for the database
+
+NEXT_PUBLIC_SUPABASE_URL =https://asqaiomncjiqakgnplel.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFzcWFpb21uY2ppcWFrZ25wbGVsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUyOTYwMzcsImV4cCI6MjEwMDg3MjAzN30.OUisGkmEhNLhEkjvy7MyLJ8D7Sq7oo-OJ-lUr3jEs6A
+
