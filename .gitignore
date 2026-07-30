@@ -10,9 +10,6 @@ build/
 dist/
 
 # env
-.env
-.env.local
-.env.*.local
 
 # logs
 *.log
